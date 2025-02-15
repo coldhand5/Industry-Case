@@ -1,6 +1,7 @@
 import os
 import sys
 import streamlit as st
+import urllib.parse  # ✅ Ensure urllib is imported
 
 # ✅ Ensure dependencies are installed correctly in Streamlit Cloud
 os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests google-generativeai")
@@ -100,8 +101,11 @@ st.markdown("""
 
 # ✅ Fetch News & AI Insights
 def fetch_and_generate_insights(industry, num_articles=10):
+    if not industry:
+        return "⚠ No industry provided. Please enter an industry."
+    
     base_url = "https://news.google.com/rss/search?q="
-    query = urllib.parse.quote(industry + " technology OR innovation OR AI news")
+    query = urllib.parse.quote(f"{industry} technology OR innovation OR AI news")
     url = base_url + query
     news_feed = feedparser.parse(url)
 
@@ -159,6 +163,7 @@ st.markdown("<div class='header'>🔍 AI-Powered Tech Stack & Industry Insights<
 industry = st.text_input("Enter an Industry (e.g., AI, Fintech, Blockchain)", "")
 
 if st.button("Fetch & Generate Insights"):
+    industry = industry.strip()
     if industry:
         with st.spinner("Fetching news and analyzing trends..."):
             insights = fetch_and_generate_insights(industry)
