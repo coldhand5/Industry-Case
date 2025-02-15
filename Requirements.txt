@@ -1,4 +1,8 @@
 streamlit
-requests
-beautifulsoup4
-pandas
+os
+feedparser
+urllib3
+newspaper3k
+google-generativeai
+time
+random
