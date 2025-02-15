@@ -1,13 +1,16 @@
 import os
-os.system("pip install feedparser")
+
+# Force install feedparser inside Streamlit's virtual environment
+os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser")
+
 import streamlit as st
-import os
 import feedparser
 import urllib.parse
 from newspaper import Article
 import google.generativeai as genai
 import time
 import random
+
 
 # ✅ Ensure `set_page_config` is the first command
 st.set_page_config(page_title="Tech Stack Insights", layout="wide")
