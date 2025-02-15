@@ -1,5 +1,6 @@
 import os
 import sys
+import streamlit as st
 
 # ✅ Ensure dependencies are installed correctly in Streamlit Cloud
 os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests google-generativeai")
@@ -23,33 +24,22 @@ except ModuleNotFoundError:
     os.system("pip install --no-cache-dir --upgrade --force-reinstall google-generativeai")
     import google.generativeai as genai
 
-import streamlit as st
-import urllib.parse
-import time
-import random
-
 # ✅ Ensure `set_page_config` is the first command
 st.set_page_config(page_title="Tech Stack Insights", layout="wide")
 
 # ✅ Load API Key from Environment Variable
-import streamlit as st
-
 API_KEY = st.secrets.get("GEMINI_API_KEY")
 
 if not API_KEY:
     st.error("❌ API Key not found. Set GEMINI_API_KEY in Streamlit Cloud Secrets.")
 else:
-    import google.generativeai as genai
     genai.configure(api_key=API_KEY)
-
-
-)
 
 generation_config = {
     "temperature": 0.9,
     "top_p": 0.95,
     "top_k": 64,
-    "max_output_tokens": 10000,
+    "max_output_tokens": 10000
 }
 
 model = genai.GenerativeModel(
