@@ -1,20 +1,14 @@
 import os
-import sys
-
-# ✅ Check if feedparser is installed and install it if missing
-try:
-    import feedparser
-except ModuleNotFoundError:
-    os.system("pip install feedparser")
-    sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
-    import feedparser
+os.system("pip install --no-cache-dir --upgrade --force-reinstall newspaper3k lxml requests beautifulsoup4")
 
 import streamlit as st
+import feedparser
 import urllib.parse
 from newspaper import Article
 import google.generativeai as genai
 import time
 import random
+
 
 
 
