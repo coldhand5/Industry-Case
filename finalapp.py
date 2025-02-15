@@ -32,12 +32,18 @@ import random
 st.set_page_config(page_title="Tech Stack Insights", layout="wide")
 
 # ✅ Load API Key from Environment Variable
-API_KEY = os.getenv("GEMINI_API_KEY")
+import streamlit as st
+
+API_KEY = st.secrets.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    st.error("❌ API Key not found. Set GEMINI_API_KEY as an environment variable.")
+    st.error("❌ API Key not found. Set GEMINI_API_KEY in Streamlit Cloud Secrets.")
 else:
+    import google.generativeai as genai
     genai.configure(api_key=API_KEY)
+
+
+)
 
 generation_config = {
     "temperature": 0.9,
