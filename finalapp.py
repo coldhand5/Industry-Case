@@ -1,15 +1,21 @@
 import os
+import sys
 
-# Force install feedparser inside Streamlit's virtual environment
-os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser")
+# ✅ Check if feedparser is installed and install it if missing
+try:
+    import feedparser
+except ModuleNotFoundError:
+    os.system("pip install feedparser")
+    sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
+    import feedparser
 
 import streamlit as st
-import feedparser
 import urllib.parse
 from newspaper import Article
 import google.generativeai as genai
 import time
 import random
+
 
 
 # ✅ Ensure `set_page_config` is the first command
