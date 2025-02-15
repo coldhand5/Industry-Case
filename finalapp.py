@@ -26,7 +26,7 @@ except ModuleNotFoundError:
     import google.generativeai as genai
 
 # ✅ Ensure `set_page_config` is the first command
-st.set_page_config(page_title="Tech Stack Insights", layout="wide")
+st.set_page_config(page_title="Tech Innovation", layout="wide")
 
 # ✅ Load API Key from Environment Variable
 API_KEY = st.secrets.get("GEMINI_API_KEY")
@@ -162,7 +162,7 @@ st.markdown("<div class='header'>🔍 AI-Powered Tech Stack & Industry Insights<
 
 industry = st.text_input("Enter an Industry (e.g., AI, Fintech, Blockchain)", "")
 
-if st.button("Fetch & Generate Insights"):
+if st.button("Generate Insights Analysis"):
     industry = industry.strip()
     if industry:
         with st.spinner("Fetching news and analyzing trends..."):
