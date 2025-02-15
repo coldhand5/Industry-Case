@@ -2,7 +2,7 @@ import os
 import sys
 
 # ✅ Ensure dependencies are installed correctly in Streamlit Cloud
-os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests")
+os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests google-generativeai")
 sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
 
 try:
@@ -17,9 +17,14 @@ except ModuleNotFoundError:
     os.system("pip install --no-cache-dir --upgrade --force-reinstall newspaper3k lxml==4.9.3 beautifulsoup4 requests")
     from newspaper import Article
 
+try:
+    import google.generativeai as genai
+except ModuleNotFoundError:
+    os.system("pip install --no-cache-dir --upgrade --force-reinstall google-generativeai")
+    import google.generativeai as genai
+
 import streamlit as st
 import urllib.parse
-import google.generativeai as genai
 import time
 import random
 
