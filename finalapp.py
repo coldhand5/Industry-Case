@@ -1,3 +1,5 @@
+import os
+os.system("pip install feedparser")
 import streamlit as st
 import os
 import feedparser
