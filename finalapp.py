@@ -1,5 +1,7 @@
 import os
-os.system("pip install --no-cache-dir --upgrade --force-reinstall newspaper3k lxml requests beautifulsoup4")
+
+# ✅ Force install all dependencies to ensure Streamlit Cloud works correctly
+os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml requests beautifulsoup4")
 
 import streamlit as st
 import feedparser
@@ -8,9 +10,6 @@ from newspaper import Article
 import google.generativeai as genai
 import time
 import random
-
-
-
 
 # ✅ Ensure `set_page_config` is the first command
 st.set_page_config(page_title="Tech Stack Insights", layout="wide")
