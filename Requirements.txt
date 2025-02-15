@@ -3,3 +3,6 @@ feedparser
 urllib3
 newspaper3k
 google-generativeai
+lxml
+requests
+beautifulsoup4
