@@ -1,19 +1,20 @@
-
 import os
 import sys
 
-# ✅ Ensure dependencies are installed in the correct environment
+# ✅ Ensure dependencies are installed correctly in Streamlit Cloud
+os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests")
+sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
+
 try:
     import feedparser
 except ModuleNotFoundError:
-    os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml requests beautifulsoup4")
-    sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
+    os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser")
     import feedparser
 
 try:
     from newspaper import Article
 except ModuleNotFoundError:
-    os.system("pip install --no-cache-dir --upgrade --force-reinstall newspaper3k lxml requests beautifulsoup4")
+    os.system("pip install --no-cache-dir --upgrade --force-reinstall newspaper3k lxml==4.9.3 beautifulsoup4 requests")
     from newspaper import Article
 
 import streamlit as st
