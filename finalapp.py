@@ -81,20 +81,21 @@ def fetch_and_generate_insights(industry, num_articles=10):
     )
 
     prompt = f"""
-    You are an AI analyst. Based on the following recent industry news articles, generate a **detailed report** on key trends, emerging technologies, challenges, and predictions for the future.
+    You are an AI analyst. Based on the following recent industry news articles, generate a **detailed report** on key trends, emerging technologies, economic impact, challenges, and predictions for the future.
 
     {formatted_news}
 
-    ### 1. **Key Trends**  
-    - List at least **5 major trends** shaping this industry, with detailed explanations and examples.  
-
-    ### 2. **Challenges & Risks**  
-    - Discuss **critical barriers** including regulatory, ethical, and technological concerns.  
-
-    ### 3. **Future Predictions**  
-    - Forecast **how this industry will evolve** over the next 5 years. Highlight upcoming **technologies, business models, and trends**.  
+    **🔍 Industry Leaders:** List **top innovators** in this field, e.g., "OpenAI, Anthropic, DeepSeek, Mistral leading next-gen LLMs."
     
-    Format your response with **bold** for key insights.
+    **🚀 Recent Breakthroughs:** Summarize **key technological advancements** shaping the sector.
+    
+    **🏢 Enterprise Adoption:** Highlight major corporations integrating these innovations.
+    
+    **⚖️ Regulatory Risks:** Discuss global **policy & compliance challenges** affecting adoption.
+    
+    **🔮 Future Outlook:** Predict **upcoming technologies, economic shifts, and market movements.**
+    
+    Format using emojis & structured points for easy reading.
     """
 
     return model.generate_content(prompt).text
