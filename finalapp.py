@@ -81,7 +81,7 @@ def fetch_and_generate_insights(industry, num_articles=10):
     )
 
     prompt = f"""
-    You are an **expert AI analyst** with deep expertise across multiple domains, including:
+    You are an **expert AI analyst, consultant, researcher, and innovator** with deep expertise across multiple domains, including:
     - **Strategic Management:** Industry trends, competitive dynamics, M&A activity.
     - **Financial Analysis:** Investment trends, funding rounds, and financial impact.
     - **Technology & Innovation:** Breakthroughs in AI, automation, and next-gen technologies.
@@ -89,40 +89,42 @@ def fetch_and_generate_insights(industry, num_articles=10):
     - **Operations & Supply Chain:** Automation, efficiency, and procurement strategies.
     - **IT & DevOps:** Scalability, infrastructure, security, and cloud adoption.
 
-    Generate an **executive-level industry analysis** with **Gartner/Forrester/McKinsey/BCG-style insights** covering:
+    Generate an **executive-level industry analysis** with **Gartner/Forrester/McKinsey/BCG-style insights** that are **comprehensive and not just surface-level trends.**
+    
+    Your insights should include **detailed explanations**, not just 3-4 word bullet points. Each insight must provide **business context, potential impact, and strategic recommendations.**
 
     {formatted_news}
 
-    ### 1️⃣ Market Landscape & Competitive Dynamics
-    - Who are the **dominant players, emerging challengers, and disruptors?**
-    - How are major **tech giants evolving their AI strategies?**
-    - What **M&A trends, partnerships, or ecosystem shifts** are reshaping the industry?
+    ### **🔍 1. Market Landscape & Competitive Dynamics**
+    - 🏆 **Industry Leaders:** Which companies are leading AI innovation, and how are they differentiating themselves?
+    - ⚔ **Emerging Challengers:** What startups or mid-tier companies are disrupting incumbents?
+    - 🤝 **M&A Trends:** How are acquisitions and partnerships shaping the competitive AI landscape?
+    - 🌍 **Sector-Wise Adoption:** How is AI adoption varying across finance, healthcare, retail, and logistics?
 
-    ### 2️⃣ Breakthrough Innovations & Adoption Barriers
-    - What are the **most significant AI breakthroughs**?
-    - What **real-world bottlenecks** hinder deployment?
-    - How do these breakthroughs **translate into competitive advantages**?
+    ### **🚀 2. Breakthrough Innovations & Adoption Barriers**
+    - 🔬 **AI Advancements:** What are the most disruptive AI breakthroughs?
+    - 🚧 **Enterprise Challenges:** What are the biggest barriers to adoption, such as compute constraints, risk mitigation, or data challenges?
+    - 📊 **Business Impact:** How do these advancements translate into real-world profitability and efficiency?
 
-    ### 3️⃣ Economic & Business Model Disruptions
-    - How are **AI-driven efficiencies** reshaping cost structures?
-    - What **new revenue models** are emerging due to AI-driven transformations?
-    - Where are we seeing **VC & private equity investments shifting**?
+    ### **📈 3. Economic & Business Model Disruptions**
+    - 💰 **AI-Driven Profitability:** How is AI reshaping cost structures and revenue models?
+    - 📉 **Economic Risks:** What industries face decline due to automation, and what reskilling is required?
+    - 🏦 **Investor Trends:** Where is VC and private equity investment flowing in AI?
 
-    ### 4️⃣ Regulatory & Ethical Considerations
-    - How do **global AI regulations** impact enterprises?
-    - What **legal liabilities & ethical risks** should companies be aware of?
-    - How are regulatory constraints **shaping innovation strategies**?
+    ### **⚖️ 4. Regulatory & Ethical Considerations**
+    - 📜 **Policy Impact:** How do global AI regulations impact different business models?
+    - 🏛 **Legal & Compliance Risks:** What are the hidden risks for enterprises deploying AI?
+    - 🛡 **AI Governance Strategies:** How should enterprises build AI responsibly to mitigate bias and risk?
 
-    ### 5️⃣ Future Outlook & Strategic Recommendations
-    - How will this industry **evolve over the next 3–5 years?**
-    - What **high-impact scenarios** should leaders prepare for?
-    - Provide strategic recommendations for:
-      - **CEOs & Board Members** (Competitive positioning & M&A strategy)
-      - **Product & Tech Leaders** (Product roadmap & AI integration)
-      - **Investors & VCs** (Where to deploy capital in AI & automation)
-      - **Enterprise AI Adoption Teams** (Best practices & risk mitigation)
+    ### **🔮 5. Future Outlook & Strategic Recommendations**
+    - 🌟 **Future AI Scenarios:** What are the **3 most likely industry scenarios over the next 5 years?**
+    - 🔍 **Strategic Moves for Leaders:**
+      - 👨‍💼 **CEOs & Board Members:** Competitive positioning & AI-driven expansion.
+      - 🛠 **Tech Leaders & Product Managers:** How to build AI-first products.
+      - 💸 **Investors & VCs:** Where to place high-ROI AI investments.
+      - 🏢 **Enterprise AI Adoption Teams:** Best practices & risk mitigation.
 
-    Format using **bold formatting** for key insights and structured takeaways.
+    **Format insights using structured takeaways and industry-backed reasoning.**
     """
 
     return model.generate_content(prompt).text
