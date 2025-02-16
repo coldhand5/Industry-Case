@@ -77,7 +77,7 @@ def fetch_and_generate_insights(industry, num_articles=10):
             continue
 
     formatted_news = "\n\n".join(
-        [f"**Title:** {item['title']}\n\n**Summary:** {item['content']}\n\n[Read more]({item['link']})\n\n" for item in news_data]
+        [f"**Title:** {item['title']}\n\n**Summary:** {item['content']}\n\n[Read more]({item['link']})\n\n(Source: {item['link']})\n\n" for item in news_data]
     )
 
     prompt = f"""
@@ -148,3 +148,5 @@ if st.button("Generate Insights Analysis"):
         st.error("❌ Please enter an industry before generating AI insights.")
 
 st.sidebar.info("🚀 Uses Google Gemini AI + Google News RSS")
+
+
