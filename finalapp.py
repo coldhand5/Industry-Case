@@ -61,26 +61,7 @@ def fetch_and_generate_insights(industry, num_articles=10):
     if not news_feed.entries:
         return "⚠ No recent updates found."
 
-    news_data = []
-    for i, entry in enumerate(news_feed.entries[:num_articles]):
-        try:
-            article = Article(entry.link)
-            article.download()
-            article.parse()
-            news_data.append({
-                "title": entry.title,
-                "link": entry.link,
-                "published": entry.published,
-                "content": article.text[:1500] + "..."
-            })
-        except:
-            continue
-
-    formatted_news = "\n\n".join(
-        [f"**[{item['title']}]({item['link']})**\n\n📅 Published: {item['published']}\n\n**Summary:** {item['content']}\n\n" for item in news_data]
-    )
-
-    news_references = {i+1: item for i, item in enumerate(news_data)}
+    formatted_news = ""
 
     prompt = f"""
     You are an **expert industry analyst, consultant, researcher, and innovator** with deep expertise across multiple domains, including:
@@ -90,11 +71,18 @@ def fetch_and_generate_insights(industry, num_articles=10):
     - **📦 Product Management:** Adoption barriers, market demand, and product innovation.
     - **🏭 Operations & Supply Chain:** Automation, efficiency, and procurement strategies.
     - **💻 IT & DevOps:** Scalability, infrastructure, security, and cloud adoption.
+    - **📈 Business Analysis:** Market research, business model evaluation, and KPI tracking.
+    - **🔬 ML Research:** Trends in machine learning, AI models, and experimental breakthroughs.
+    - **📡 Digital Transformation:** Implementing technology-driven change across industries.
+    - **🛠 Innovation Management:** Identifying and scaling disruptive innovations.
+    - **🎯 Marketing & Consumer Insights:** Understanding customer behavior and branding strategies.
+    - **🌎 Sustainability & ESG:** Green technologies, ethical investments, and regulatory impacts.
+    - **⚡ Energy & Utilities:** Smart grids, renewable energy trends, and efficiency improvements.
+    - **📜 Legal & Compliance:** Data privacy laws, intellectual property, and policy changes.
+    - **🏥 Healthcare & Biotech:** Medical advancements, biotech research, and digital health.
     
     Generate an **executive-level industry analysis** for **{industry}**, similar to insights from **Gartner, Forrester, McKinsey, and BCG**. 
     Your analysis should include **detailed explanations**, not just bullet points, with clear **business context, market impact, and strategic recommendations.**
-    
-    {formatted_news}
     
     ### **🔍 1. Market Landscape & Competitive Dynamics**
     - 🏆 **Industry Leaders:** Which companies are driving innovation, and what gives them a competitive edge?
@@ -111,6 +99,16 @@ def fetch_and_generate_insights(industry, num_articles=10):
     - 💰 **Revenue & Profit Trends:** What are the most profitable business models in this industry?
     - 📉 **Risks & Disruptions:** What market forces could impact profitability in the short and long term?
     - 🏦 **Investor Sentiment:** Where is venture capital and private equity investment flowing?
+    
+    ### **🏛 4. Policy & Regulatory Considerations**
+    - 📜 **Government Regulations:** What laws and policies are impacting this industry’s growth?
+    - 🏛 **Compliance Challenges:** What hidden legal risks could businesses face?
+    - 🛡 **Industry Governance Strategies:** How should companies navigate compliance and mitigate legal risks?
+    
+    ### **🌎 5. Sustainability & ESG Trends**
+    - 🌱 **Green Technologies:** What sustainability-driven innovations are emerging?
+    - 🌍 **Carbon Regulations:** How do new climate policies impact businesses and supply chains?
+    - 💡 **Renewable Energy Investments:** Where is funding flowing for clean energy solutions?
     
     **Provide detailed, structured insights with industry-backed reasoning.**
     """
