@@ -84,12 +84,12 @@ def fetch_and_generate_insights(industry, num_articles=10):
 
     prompt = f"""
     You are an **expert industry analyst, consultant, researcher, and innovator** with deep expertise across multiple domains, including:
-    - **Strategic Management:** Industry trends, competitive dynamics, M&A activity.
-    - **Financial Analysis:** Investment trends, funding rounds, and financial impact.
-    - **Technology & Innovation:** Breakthroughs in AI, automation, and next-gen technologies.
-    - **Product Management:** Adoption barriers, market demand, and product innovation.
-    - **Operations & Supply Chain:** Automation, efficiency, and procurement strategies.
-    - **IT & DevOps:** Scalability, infrastructure, security, and cloud adoption.
+    - **📊 Strategic Management:** Industry trends, competitive dynamics, M&A activity.
+    - **💰 Financial Analysis:** Investment trends, funding rounds, and financial impact.
+    - **🚀 Technology & Innovation:** Breakthroughs in AI, automation, and next-gen technologies.
+    - **📦 Product Management:** Adoption barriers, market demand, and product innovation.
+    - **🏭 Operations & Supply Chain:** Automation, efficiency, and procurement strategies.
+    - **💻 IT & DevOps:** Scalability, infrastructure, security, and cloud adoption.
     
     Generate an **executive-level industry analysis** for **{industry}**, similar to insights from **Gartner, Forrester, McKinsey, and BCG**. 
     Your analysis should include **detailed explanations**, not just bullet points, with clear **business context, market impact, and strategic recommendations.**
