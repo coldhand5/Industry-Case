@@ -1,7 +1,7 @@
 import os
 import sys
 import streamlit as st
-import urllib.parse  # ✅ Ensure urllib is imported
+import urllib.parse
 
 # ✅ Ensure dependencies are installed correctly in Streamlit Cloud
 os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests google-generativeai")
@@ -81,21 +81,48 @@ def fetch_and_generate_insights(industry, num_articles=10):
     )
 
     prompt = f"""
-    You are an AI analyst. Based on the following recent industry news articles, generate a **detailed report** on key trends, emerging technologies, economic impact, challenges, and predictions for the future.
+    You are an **expert AI analyst** with deep expertise across multiple domains, including:
+    - **Strategic Management:** Industry trends, competitive dynamics, M&A activity.
+    - **Financial Analysis:** Investment trends, funding rounds, and financial impact.
+    - **Technology & Innovation:** Breakthroughs in AI, automation, and next-gen technologies.
+    - **Product Management:** Adoption barriers, market demand, and product innovation.
+    - **Operations & Supply Chain:** Automation, efficiency, and procurement strategies.
+    - **IT & DevOps:** Scalability, infrastructure, security, and cloud adoption.
+
+    Generate an **executive-level industry analysis** with **Gartner/Forrester/McKinsey/BCG-style insights** covering:
 
     {formatted_news}
 
-    **🔍 Industry Leaders:** List **top innovators** in this field, e.g., "OpenAI, Anthropic, DeepSeek, Mistral leading next-gen LLMs."
-    
-    **🚀 Recent Breakthroughs:** Summarize **key technological advancements** shaping the sector.
-    
-    **🏢 Enterprise Adoption:** Highlight major corporations integrating these innovations.
-    
-    **⚖️ Regulatory Risks:** Discuss global **policy & compliance challenges** affecting adoption.
-    
-    **🔮 Future Outlook:** Predict **upcoming technologies, economic shifts, and market movements.**
-    
-    Format using emojis & structured points for easy reading.
+    ### 1️⃣ Market Landscape & Competitive Dynamics
+    - Who are the **dominant players, emerging challengers, and disruptors?**
+    - How are major **tech giants evolving their AI strategies?**
+    - What **M&A trends, partnerships, or ecosystem shifts** are reshaping the industry?
+
+    ### 2️⃣ Breakthrough Innovations & Adoption Barriers
+    - What are the **most significant AI breakthroughs**?
+    - What **real-world bottlenecks** hinder deployment?
+    - How do these breakthroughs **translate into competitive advantages**?
+
+    ### 3️⃣ Economic & Business Model Disruptions
+    - How are **AI-driven efficiencies** reshaping cost structures?
+    - What **new revenue models** are emerging due to AI-driven transformations?
+    - Where are we seeing **VC & private equity investments shifting**?
+
+    ### 4️⃣ Regulatory & Ethical Considerations
+    - How do **global AI regulations** impact enterprises?
+    - What **legal liabilities & ethical risks** should companies be aware of?
+    - How are regulatory constraints **shaping innovation strategies**?
+
+    ### 5️⃣ Future Outlook & Strategic Recommendations
+    - How will this industry **evolve over the next 3–5 years?**
+    - What **high-impact scenarios** should leaders prepare for?
+    - Provide strategic recommendations for:
+      - **CEOs & Board Members** (Competitive positioning & M&A strategy)
+      - **Product & Tech Leaders** (Product roadmap & AI integration)
+      - **Investors & VCs** (Where to deploy capital in AI & automation)
+      - **Enterprise AI Adoption Teams** (Best practices & risk mitigation)
+
+    Format using **bold formatting** for key insights and structured takeaways.
     """
 
     return model.generate_content(prompt).text
