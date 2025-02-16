@@ -2,9 +2,8 @@ import os
 import sys
 import streamlit as st
 import urllib.parse
-import re
 
-# ✅ Ensure dependencies are installed correctly in Streamlit Cloud
+# ✅ Ensure dependencies are installed correctly
 os.system("pip install --no-cache-dir --upgrade --force-reinstall feedparser newspaper3k lxml==4.9.3 beautifulsoup4 requests google-generativeai")
 sys.path.append("/home/appuser/.local/lib/python3.12/site-packages")
 
@@ -26,10 +25,10 @@ except ModuleNotFoundError:
     os.system("pip install --no-cache-dir --upgrade --force-reinstall google-generativeai")
     import google.generativeai as genai
 
-# ✅ Ensure `set_page_config` is the first command
-st.set_page_config(page_title="Tech Innovation", layout="wide")
+# ✅ Ensure set_page_config is first
+st.set_page_config(page_title="Industry Insights", layout="wide")
 
-# ✅ Load API Key from Environment Variable
+# ✅ Load API Key
 API_KEY = st.secrets.get("GEMINI_API_KEY")
 
 if not API_KEY:
@@ -49,19 +48,37 @@ model = genai.GenerativeModel(
     generation_config=generation_config
 )
 
+# ✅ Fetch News & Industry Insights
 def fetch_and_generate_insights(industry, num_articles=10):
     if not industry:
-        return "⚠ No industry provided. Please enter an industry."
+        return "⚠️ No industry provided. Please enter an industry."
     
     base_url = "https://news.google.com/rss/search?q="
-    query = urllib.parse.quote(f"{industry} technology OR innovation OR AI news")
+    query = urllib.parse.quote(f"{industry} latest trends OR market insights OR innovation news")
     url = base_url + query
     news_feed = feedparser.parse(url)
 
     if not news_feed.entries:
-        return "⚠ No recent updates found."
+        return "⚠️ No recent updates found."
 
-    formatted_news = ""
+    news_data = []
+    for i, entry in enumerate(news_feed.entries[:num_articles]):
+        try:
+            article = Article(entry.link)
+            article.download()
+            article.parse()
+            news_data.append({
+                "title": entry.title,
+                "link": entry.link,
+                "published": entry.published,
+                "content": article.text[:1500] + "..."
+            })
+        except:
+            continue
+
+    formatted_news = "\n\n".join(
+        [f"**[{item['title']}]({item['link']})**\n\n📅 **Published:** {item['published']}\n\n📰 **Summary:** {item['content']}\n\n" for item in news_data]
+    )
 
     prompt = f"""
     You are an **expert industry analyst, consultant, researcher, and innovator** with deep expertise across multiple domains, including:
@@ -80,57 +97,38 @@ def fetch_and_generate_insights(industry, num_articles=10):
     - **⚡ Energy & Utilities:** Smart grids, renewable energy trends, and efficiency improvements.
     - **📜 Legal & Compliance:** Data privacy laws, intellectual property, and policy changes.
     - **🏥 Healthcare & Biotech:** Medical advancements, biotech research, and digital health.
-    
-    Generate an **executive-level industry analysis** for **{industry}**, similar to insights from **Gartner, Forrester, McKinsey, and BCG**. 
-    Your analysis should include **detailed explanations**, not just bullet points, with clear **business context, market impact, and strategic recommendations.**
-    
-    ### **🔍 1. Market Landscape & Competitive Dynamics**
-    - 🏆 **Industry Leaders:** Which companies are driving innovation, and what gives them a competitive edge?
-    - ⚔ **Emerging Disruptors:** What startups or new entrants are challenging established players?
-    - 🤝 **Mergers & Acquisitions:** What recent deals are shaping industry consolidation?
-    - 🌍 **Regional Market Variations:** How does this industry differ across key global markets?
-    
-    ### **🚀 2. Key Innovations & Adoption Barriers**
-    - 🔬 **Major Innovations:** What are the latest breakthroughs impacting this industry?
-    - 🚧 **Challenges to Growth:** What barriers (costs, regulations, supply chain) are limiting expansion?
-    - 📊 **Business Impact:** How do these innovations translate into profits, market share, or efficiency gains?
-    
-    ### **📈 3. Economic & Financial Implications**
-    - 💰 **Revenue & Profit Trends:** What are the most profitable business models in this industry?
-    - 📉 **Risks & Disruptions:** What market forces could impact profitability in the short and long term?
-    - 🏦 **Investor Sentiment:** Where is venture capital and private equity investment flowing?
-    
-    ### **🏛 4. Policy & Regulatory Considerations**
-    - 📜 **Government Regulations:** What laws and policies are impacting this industry’s growth?
-    - 🏛 **Compliance Challenges:** What hidden legal risks could businesses face?
-    - 🛡 **Industry Governance Strategies:** How should companies navigate compliance and mitigate legal risks?
-    
-    ### **🌎 5. Sustainability & ESG Trends**
-    - 🌱 **Green Technologies:** What sustainability-driven innovations are emerging?
-    - 🌍 **Carbon Regulations:** How do new climate policies impact businesses and supply chains?
-    - 💡 **Renewable Energy Investments:** Where is funding flowing for clean energy solutions?
-    
-    **Provide detailed, structured insights with industry-backed reasoning.**
+
+    ### **📢 Generate Industry Insights**
+    Based on the latest industry news and market movements, provide:
+    - **💡 Key Trends:** What’s shaping the industry today?
+    - **🚧 Challenges & Risks:** What hurdles exist for companies?
+    - **📈 Growth Opportunities:** Where are the big wins?
+    - **🏆 Competitive Landscape:** Who are the market leaders and challengers?
+    - **🔮 Future Outlook:** What does the next 3-5 years look like?
+
+    {formatted_news}
     """
-    
-    response = model.generate_content(prompt).text
-    
-    st.markdown(response, unsafe_allow_html=True)
 
-st.markdown("# 🔍 Tech Innovation")
+    return model.generate_content(prompt).text
 
-industry = st.text_input("Enter an Industry (e.g., AI, Fintech, Blockchain)", "")
+# ✅ Streamlit UI
+st.markdown("# 🔍 Industry Insights")
+
+industry = st.text_input("Enter an Industry (e.g., Fintech, Healthcare, AI)", "")
 
 if st.button("Generate Insights Analysis"):
     industry = industry.strip()
     if industry:
-        with st.spinner("Fetching news and analyzing trends..."):
-            fetch_and_generate_insights(industry)
+        with st.spinner("🔄 Fetching news and analyzing trends..."):
+            insights = fetch_and_generate_insights(industry)
+        
+        if insights:
+            st.markdown(insights, unsafe_allow_html=False)
+        else:
+            st.error("🚨 Failed to generate insights.")
     else:
-        st.error("❌ Please enter an industry before generating AI insights.")
+        st.error("❌ Please enter an industry before generating insights.")
 
-st.markdown("""
-<div style='text-align: center; color: #6b7280; padding: 10px; border-top: 1px solid #e5e7eb;'>
-    Developed by <b>Krishna H</b> | Product | Innovation
-</div>
-""", unsafe_allow_html=True)
+# ✅ Footer
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>🚀 Built by Krishna H | Product | Innovation</p>", unsafe_allow_html=True)
